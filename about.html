@@ -3,119 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTIFACT | Главная</title>
+    <title>ARTIFACT | Made by Rysbekov</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/bg.jpg') no-repeat center/cover;
-            background-color: #1a1a1a;
+        :root {
+            --bg-dark: #000000;
+            --text-light: #ffffff;
         }
-        .card-img-top {
-            height: 400px;
-            object-fit: cover;
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff;
+            color: #1a1a1a;
+            overflow-x: hidden;
         }
-        .section-padding {
-            padding: 80px 0;
+
+        h1, h2, h3, .logo {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
         }
-        .card {
-            border: none;
+
+        /* Navbar Customization */
+        .navbar {
+            padding: 1.2rem 0;
+            background-color: var(--bg-dark);
+        }
+        .nav-link {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             transition: 0.3s;
         }
-        .card:hover {
-            transform: translateY(-5px);
+        .dropdown-menu {
+            border-radius: 0;
+            margin-top: 10px;
+            border: 1px solid #333;
         }
+        .dropdown-item {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('images/rysbekov.jpg') no-repeat center/cover;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 12px; }
+
+        /* Catalog Grid */
+        .section-padding { padding: 80px 0; }
+        .card { border: none; transition: 0.4s; cursor: pointer; }
+        .card-img-wrapper { height: 450px; overflow: hidden; background: #f9f9f9; }
+        .card-img-top { height: 100%; object-fit: cover; transition: 0.6s; }
+        .card:hover .card-img-top { transform: scale(1.05); }
+
+        /* Buttons */
+        .btn-archive {
+            border: 1px solid #fff;
+            color: #fff;
+            border-radius: 0;
+            padding: 12px 35px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-archive:hover { background: #fff; color: #000; }
+
+        footer { background: #000; color: #555; padding: 40px 0; font-size: 0.7rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand logo" href="index.html" style="font-family: 'Playfair Display'; letter-spacing: 3px;">
-            ARTIFACT
-        </a>
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <a class="navbar-brand logo" href="index.html">ARTIFACT</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="catalog.html">Каталог</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">Главная</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="catDrop" role="button" data-bs-toggle="dropdown">
+                        Категории
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark bg-black">
+                        <li><a class="dropdown-item" href="catalog.html">Верхняя одежда</a></li>
+                        <li><a class="dropdown-item" href="catalog.html">Обувь</a></li>
+                        <li><a class="dropdown-item" href="catalog.html">Аксессуары</a></li>
+                        <li><hr class="dropdown-divider border-secondary"></li>
+                        <li><a class="dropdown-item" href="catalog.html">Весь каталог</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<header class="hero d-flex align-items-center">
-    <div class="container text-center text-white">
-        <h1 style="font-family: 'Playfair Display'; font-size: 5rem; letter-spacing: 10px;">ARTIFACT</h1>
-        <p style="font-size: 1.2rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 3px;">Archive & Luxury Goods</p>
-        <a href="catalog.html" class="btn btn-outline-light px-5 py-2 mt-4">Смотреть каталог</a>
+<header class="hero">
+    <div class="container">
+        <p class="text-uppercase mb-2" style="letter-spacing: 5px;">Made by Rysbekov</p>
+        <h1>ARTIFACT</h1>
+        <div class="mt-4">
+            <a href="catalog.html" class="btn-archive">Смотреть каталог</a>
+        </div>
     </div>
 </header>
 
-<section class="container section-padding">
-    <div class="row text-center">
-        <div class="col-md-4">
-            <h3 style="font-family: 'Playfair Display';">Аутентичность</h3>
-            <p class="text-muted small">Гарантируем подлинность каждого лота. Экспертная проверка перед продажей.</p>
-        </div>
-        <div class="col-md-4">
-            <h3 style="font-family: 'Playfair Display';">Редкие коллекции</h3>
-            <p class="text-muted small">Поиск уникальных вещей из подиумных коллекций прошлых десятилетий.</p>
-        </div>
-        <div class="col-md-4">
-            <h3 style="font-family: 'Playfair Display';">Премиум качество</h3>
-            <p class="text-muted small">Тщательный отбор вещей в отличном и идеальном состоянии.</p>
-        </div>
-    </div>
-</section>
-
-<section class="bg-white section-padding border-top">
+<section class="section-padding">
     <div class="container">
-        <h2 class="text-center mb-5" style="font-family: 'Playfair Display'; letter-spacing: 2px;">НОВЫЕ ПОСТУПЛЕНИЯ</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg" class="card-img-top" alt="Item">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Rick Owens Stooges</h5>
-                        <p class="card-text text-muted">$700</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/prada.jpg" class="card-img-top" alt="Item">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Prada Sport</h5>
-                        <p class="card-text text-muted">$1500</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg" class="card-img-top" alt="Item">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">BAPE Shark</h5>
-                        <p class="card-text text-muted">$1400</p>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <h2 class="h4 mb-0">Новые поступления</h2>
+            <a href="catalog.html" class="text-dark small text-decoration-none border-bottom border-dark">Все товары</a>
         </div>
-        <div class="text-center mt-5">
-            <a href="catalog.html" class="text-dark text-decoration-none border-bottom border-dark">Смотреть все товары</a>
+        <div class="row g-4">
+            <div class="col-6 col-md-4">
+                <div class="card" onclick="window.location.href='catalog.html'">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg" class="card-img-top" alt="Item">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="mb-1 fw-bold">RICK OWENS STOOGES</h6>
+                        <p class="text-muted small">$700</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card" onclick="window.location.href='catalog.html'">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/4a/6e/ce/4a6ece1853b9eaa2777a1af63ddda4eb.jpg" class="card-img-top" alt="Item">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="mb-1 fw-bold">Bug Rubber Spike Spiky Punk Backpack</h6>
+                        <p class="text-muted small">$400</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card" onclick="window.location.href='catalog.html'">
+                    <div class="card-img-wrapper">
+                        <img src="https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg" class="card-img-top" alt="Item">
+                    </div>
+                    <div class="card-body text-center">
+                        <h6 class="mb-1 fw-bold">BAPE SHARK HOODIE</h6>
+                        <p class="text-muted small">$1,400</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-<footer class="bg-black text-white py-5">
-    <div class="container text-center">
-        <p style="letter-spacing: 4px; margin: 0; font-family: 'Playfair Display'; font-size: 1.5rem;">ARTIFACT</p>
-        <p style="letter-spacing: 2px; font-size: 0.7rem; opacity: 0.5; margin-top: 10px;">© 2026 PRIVATE ARCHIVE</p>
+<footer class="text-center">
+    <div class="container">
+        <p class="logo mb-2" style="font-size: 1.2rem; color: #fff;">ARTIFACT</p>
+        <p>© 2026 PRIVATE ARCHIVE. ALL RIGHTS RESERVED.</p>
     </div>
 </footer>
 
