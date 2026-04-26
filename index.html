@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTIFACT | Главная</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .navbar-brand, h1, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero {
+            padding: 150px 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/bg.jpg') no-repeat center/cover;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+    <div class="container">
+        <a class="navbar-brand logo" href="index.html" style="letter-spacing: 3px;">
+            ARTIFACT
+        </a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="catalog.html">Каталог</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="container text-center text-white">
+        <h1 style="font-size: 4rem; letter-spacing: 10px;">ARTIFACT</h1>
+        <p style="font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px;">
+            Редкие и архивные вещи мировых брендов
+        </p>
+        <a href="catalog.html" class="btn btn-outline-light mt-3 px-5 py-2">
+            Смотреть каталог
+        </a>
+    </div>
+</header>
+
+<section class="container mt-5 py-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h3 class="mb-3">Аутентичность</h3>
+            <p class="text-muted">Только оригинальные вещи известных брендов.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="mb-3">Редкие коллекции</h3>
+            <p class="text-muted">Архивные модели прошлых лет.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="mb-3">Премиум качество</h3>
+            <p class="text-muted">Идеальное состояние и проверка качества.</p>
+        </div>
+    </div>
+</section>
+
+<footer class="footer bg-black text-white py-4">
+    <div class="container text-center">
+        <p style="margin: 0; letter-spacing: 2px;">© 2026 ARTIFACT</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

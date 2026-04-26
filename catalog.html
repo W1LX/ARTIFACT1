@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог | LUX ARCHIVE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .card-img-top {
+            height: 400px; /* Немного увеличил высоту для люкс-вида */
+            object-fit: cover;
+            background-color: #f8f8f8;
+        }
+        .section-title {
+            margin-top: 60px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+        }
+        .price {
+            font-weight: bold;
+            color: #000;
+        }
+        .product {
+            border: none;
+            transition: 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+    <div class="container">
+        <a class="navbar-brand logo" href="index.html">LUX ARCHIVE</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Категории</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#jackets">Куртки</a></li>
+                        <li><a class="dropdown-item" href="#t-shirts">Футболки</a></li>
+                        <li><a class="dropdown-item" href="#pants">Штаны</a></li>
+                        <li><a class="dropdown-item" href="#shoes">Обувь</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mb-5">
+    <h1 class="text-center mt-5 display-4" style="font-family: 'Playfair Display';">ARCHIVE COLLECTIONS</h1>
+
+    <h2 id="jackets" class="section-title">Куртки / Outerwear</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="images/prada.jpg" class="card-img-top" alt="Prada Jacket">
+                <div class="card-body text-center">
+                    <h5>Prada Sport Nylon Jacket</h5>
+                    <p>1998 - 2001 SGV</p>
+                    <p class="price">$1500</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="images/gucci.jpg" class="card-img-top" alt="Gucci Jacket">
+                <div class="card-body text-center">
+                    <h5>Gucci Napoleon Jacket</h5>
+                    <p>2015 Ready-to-wear</p>
+                    <p class="price">$3300</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg" class="card-img-top" alt="BAPE">
+                <div class="card-body text-center">
+                    <h5>BAPE Shark Riders Jacket</h5>
+                    <p>2010 Archive</p>
+                    <p class="price">$1400</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg" class="card-img-top" alt="Rick Owens">
+                <div class="card-body text-center">
+                    <h5>Rick Owens Stooges</h5>
+                    <p>2010 Leather</p>
+                    <p class="price">$700</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="t-shirts" class="section-title">Футболки / T-shirts</h2>
+    <div class="row g-4">
+   <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/f0/61/cc/f061ccbd733ec4fa5d5670cab8598292.jpg" class="card-img-top" alt="Prada Jacket">
+                <div class="card-body text-center">
+                    <h5>Enfants Riches Déprimés Distressed Logo Tee</h5>
+                    <p>2012</p>
+                    <p class="price">$450</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/38/d1/9c/38d19c69e383552c35fd5dc038fd39c8.jpg" class="card-img-top" alt="Gucci Jacket">
+                <div class="card-body text-center">
+                    <h5>Number (N)ine "Grunge" Distressed Border Long Sleeve</h5>
+                    <p>2002–2005</p>
+                    <p class="price">$400</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/96/5b/e5/965be50ecd0697ea630d41827de81e4f.jpg" class="card-img-top" alt="BAPE">
+                <div class="card-body text-center">
+                    <h5>Chrome Hearts "USA Flag" London 2012 Tee</h5>
+                    <p>2012</p>
+                    <p class="price">$400</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/81/60/90/816090058d7dee9c97e13593eb256fde.jpg" class="card-img-top" alt="Rick Owens">
+                <div class="card-body text-center">
+                    <h5>Hood By Air x Aphex Twin "Windowlicker" Longsleeve</h5>
+                    <p>2014 (Коллекция "Superego")</p>
+                    <p class="price">$350</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 id="pants" class="section-title">Штаны / Pants</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/00/80/00/0080003d19f122dc26795f77f2dc1a16.jpg" class="card-img-top" alt="Prada Jacket">
+                <div class="card-body text-center">
+                    <h5>Issey Miyake Men Multi-Pocket Layered Denim (Naoki Takizawa)</h5>
+                    <p>AW2002 "Tether"</p>
+                    <p class="price">$1700</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/95/88/50/958850b387ab9c55dec4bbb9246baf46.jpg" class="card-img-top" alt="Gucci Jacket">
+                <div class="card-body text-center">
+                    <h5>Rick Owens High-Neck Leather Biker (Naska/Stooges)</h5>
+                    <p>2009-2012</p>
+                    <p class="price">$700</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/1d/20/97/1d20974f5d9023bf2d95f5a6f526403d.jpg" class="card-img-top" alt="BAPE">
+                <div class="card-body text-center">
+                    <h5>Shine Luxury Studios "Knotterstar" Waxed Flare Jeans</h5>
+                    <p>2024</p>
+                    <p class="price">$340</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/46/49/55/4649559dfd4a73b23623a90fd09c1773.jpg" class="card-img-top" alt="Rick Owens">
+                <div class="card-body text-center">
+                    <h5>Rick Owens Bolan Banana Bootcut Pants (Waxed Denim)</h5>
+                    <p>2022</p>
+                    <p class="price">$890</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 id="shoes" class="section-title">Обувь / Footwear</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/c0/e7/f6/c0e7f63d3c95d2c653915081ac9ac4c7.jpg" class="card-img-top" alt="Prada Jacket">
+                <div class="card-body text-center">
+                    <h5>The Old Curiosity Shop x John Moore "Spiked" Hogg Boots</h5>
+                    <p>2000-2010</p>
+                    <p class="price">$990</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/1a/79/b7/1a79b71a89f8490b74333606d7dd382c.jpg" class="card-img-top" alt="Gucci Jacket">
+                <div class="card-body text-center">
+                    <h5>Swear London "Alternative Smiley" Platform Boots</h5>
+                    <p>1990-2000</p>
+                    <p class="price">$500</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/ad/5e/75/ad5e751e237f5d9b921154329aaa6907.jpg" class="card-img-top" alt="BAPE">
+                <div class="card-body text-center">
+                    <h5>Carol Christian Poell "Drip" Derby (AM/2601L ROOMS-PTC/10)</h5>
+                    <p>2010</p>
+                    <p class="price">$1990</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/54/ed/04/54ed04fe02024fd07446c291308605f8.jpg" class="card-img-top" alt="Rick Owens">
+                <div class="card-body text-center">
+                    <h5>Rick Owens "Wrapped" Ramone Sneakers</h5>
+                    <p>2017</p>
+                    <p class="price">$730</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-5 py-4 bg-black text-white">
+    <div class="container text-center">
+        <p>© 2026 LUX ARCHIVE</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
