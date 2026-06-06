@@ -26,30 +26,18 @@
             text-transform: uppercase;
         }
 
-        /* Navbar Customization */
         .navbar {
             padding: 1.2rem 0;
             background-color: var(--bg-dark);
         }
+
         .nav-link {
             font-size: 0.8rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: 0.3s;
         }
-        .dropdown-menu {
-            border-radius: 0;
-            margin-top: 10px;
-            border: 1px solid #333;
-        }
-        .dropdown-item {
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            padding: 10px 20px;
-        }
 
-        /* Hero Section */
         .hero {
             height: 85vh;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
@@ -59,16 +47,32 @@
             color: white;
             text-align: center;
         }
-        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 12px; }
 
-        /* Catalog Grid */
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            letter-spacing: 12px;
+        }
+
         .section-padding { padding: 80px 0; }
-        .card { border: none; transition: 0.4s; cursor: pointer; }
-        .card-img-wrapper { height: 450px; overflow: hidden; background: #f9f9f9; }
-        .card-img-top { height: 100%; object-fit: cover; transition: 0.6s; }
-        .card:hover .card-img-top { transform: scale(1.05); }
 
-        /* Buttons */
+        .card { border: none; transition: 0.4s; cursor: pointer; }
+
+        .card-img-wrapper {
+            height: 450px;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+
+        .card-img-top {
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
         .btn-archive {
             border: 1px solid #fff;
             color: #fff;
@@ -80,38 +84,146 @@
             transition: 0.3s;
             text-decoration: none;
         }
-        .btn-archive:hover { background: #fff; color: #000; }
 
-        footer { background: #000; color: #555; padding: 40px 0; font-size: 0.7rem; letter-spacing: 2px; }
+        .btn-archive:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        footer {
+            background: #000;
+            color: #555;
+            padding: 40px 0;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
+
 <body>
+    
+    <script>
+    // Список твоих треков (можешь добавлять сколько угодно)
+    const playlist = [
+        { title: "Osamason - Whiteasf", src: "music/track1.mp3" },
+        { title: "Nettspend - What They Say", src: "music/track2.mp3" },
+        { title: "Chief Keef - Love Sosa", src: "music/track3.mp3" }
+    ];
+
+    let currentTrackIndex = 0;
+    const audio = document.getElementById('main-audio');
+    const playBtn = document.getElementById('player-play');
+    const prevBtn = document.getElementById('player-prev');
+    const nextBtn = document.getElementById('player-next');
+    const trackTitle = document.getElementById('player-track-title');
+    const progressBar = document.getElementById('player-progress');
+    const currentTimeEl = document.getElementById('player-current-time');
+    const durationEl = document.getElementById('player-duration');
+
+    // Загрузка трека
+    function loadTrack(index) {
+        const track = playlist[index];
+        audio.src = track.src;
+        trackTitle.textContent = track.title;
+    }
+
+    // Воспроизведение / Пауза
+    function togglePlay() {
+        if (audio.paused) {
+            audio.play().catch(e => console.log("Автовоспроизведение заблокировано браузером, нужен клик"));
+            playBtn.textContent = '⏸';
+        } else {
+            audio.pause();
+            playBtn.textContent = '▶';
+        }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+
+    // Переключение треков
+    prevBtn.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrackIndex);
+        audio.play();
+        playBtn.textContent = '⏸';
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex);
+        audio.play();
+        playBtn.textContent = '⏸';
+    });
+
+    // Автоматический переход на следующий трек по окончании
+    audio.addEventListener('ended', () => {
+        nextBtn.click();
+    });
+
+    // Обновление прогресс-бара и времени
+    audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progress;
+            
+            // Форматирование времени (минуты:секунды)
+            let curMins = Math.floor(audio.currentTime / 60);
+            let curSecs = Math.floor(audio.currentTime % 60);
+            let durMins = Math.floor(audio.duration / 60);
+            let durSecs = Math.floor(audio.duration % 60);
+            
+            if (curSecs < 10) curSecs = "0" + curSecs;
+            if (durSecs < 10) durSecs = "0" + durSecs;
+            
+            currentTimeEl.textContent = `${curMins}:${curSecs}`;
+            durationEl.textContent = `${durMins}:${durSecs}`;
+        }
+    });
+
+    // Перемотка трека ползунком
+    progressBar.addEventListener('input', () => {
+        const seekTime = (progressBar.value / 100) * audio.duration;
+        audio.currentTime = seekTime;
+    });
+
+    // Инициализация первого трека при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+        loadTrack(currentTrackIndex);
+    });
+</script>
 
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand logo" href="index.html">ARTIFACT</a>
+
+        <a class="navbar-brand logo-wrap" href="index.html">
+            <img src="images/logo.jpg" class="logo-img" alt="logo">
+            <span class="logo">ARTIFACT</span>
+        </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Главная</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="catDrop" role="button" data-bs-toggle="dropdown">
-                        Категории
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark bg-black">
-                        <li><a class="dropdown-item" href="catalog.html">Верхняя одежда</a></li>
-                        <li><a class="dropdown-item" href="catalog.html">Обувь</a></li>
-                        <li><a class="dropdown-item" href="catalog.html">Аксессуары</a></li>
-                        <li><hr class="dropdown-divider border-secondary"></li>
-                        <li><a class="dropdown-item" href="catalog.html">Весь каталог</a></li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="catalog.html">Категории</a></li>
+                <li class="nav-item"><a class="nav-link" href="profile.html">Профиль</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
             </ul>
         </div>
+
     </div>
 </nav>
 
@@ -131,11 +243,12 @@
             <h2 class="h4 mb-0">Новые поступления</h2>
             <a href="catalog.html" class="text-dark small text-decoration-none border-bottom border-dark">Все товары</a>
         </div>
+
         <div class="row g-4">
             <div class="col-6 col-md-4">
                 <div class="card" onclick="window.location.href='catalog.html'">
                     <div class="card-img-wrapper">
-                        <img src="https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg" class="card-img-top" alt="Item">
+                        <img src="https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg" class="card-img-top">
                     </div>
                     <div class="card-body text-center">
                         <h6 class="mb-1 fw-bold">RICK OWENS STOOGES</h6>
@@ -146,10 +259,10 @@
             <div class="col-6 col-md-4">
                 <div class="card" onclick="window.location.href='catalog.html'">
                     <div class="card-img-wrapper">
-                        <img src="https://i.pinimg.com/736x/4a/6e/ce/4a6ece1853b9eaa2777a1af63ddda4eb.jpg" class="card-img-top" alt="Item">
+                        <img src="https://i.pinimg.com/736x/4a/6e/ce/4a6ece1853b9eaa2777a1af63ddda4eb.jpg" class="card-img-top">
                     </div>
                     <div class="card-body text-center">
-                        <h6 class="mb-1 fw-bold">Bug Rubber Spike Spiky Punk Backpack</h6>
+                        <h6 class="mb-1 fw-bold">Spike Backpack</h6>
                         <p class="text-muted small">$400</p>
                     </div>
                 </div>
@@ -157,7 +270,7 @@
             <div class="col-6 col-md-4">
                 <div class="card" onclick="window.location.href='catalog.html'">
                     <div class="card-img-wrapper">
-                        <img src="https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg" class="card-img-top" alt="Item">
+                        <img src="https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg" class="card-img-top">
                     </div>
                     <div class="card-body text-center">
                         <h6 class="mb-1 fw-bold">BAPE SHARK HOODIE</h6>
@@ -177,5 +290,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

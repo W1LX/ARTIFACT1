@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль | LUX ARCHIVE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .profile-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e5e5;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+        .order-item {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            background: #f8f8f8;
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            background: #000000;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+        .status-badge.waiting {
+            background: #7a7a7a;
+        }
+        .clear-btn {
+            font-size: 0.8rem;
+            color: #dc3545;
+            cursor: pointer;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
+    <div class="container">
+        <a class="navbar-brand logo d-flex align-items-center gap-2" href="index.html">
+            <img src="images/logo.jpg" alt="LUX ARCHIVE" style="height: 40px;">
+            <span style="letter-spacing:2px; font-family: 'Playfair Display', serif;">
+                ARTIFACT
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Главная</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Категории
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="catalog.html#jackets">Куртки</a></li>
+                        <li><a class="dropdown-item" href="catalog.html#t-shirts">Футболки</a></li>
+                        <li><a class="dropdown-item" href="catalog.html#pants">Штаны</a></li>
+                        <li><a class="dropdown-item" href="catalog.html#shoes">Обувь</a></li>
+                        <li><a class="dropdown-item" href="catalog.html#accessories">Аксессуары</a></li>
+                        <li><a class="dropdown-item" href="catalog.html#bags">Сумки</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="profile.html">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">О нас</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container mb-5">
+    <h1 class="text-center mt-5 display-4" style="font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 2px;">
+        My Profile
+    </h1>
+
+    <div class="row g-4 mt-4">
+        <div class="col-md-4">
+            <div class="profile-card text-center">
+                <div class="profile-avatar">R</div>
+                <h4 style="font-family: 'Playfair Display', serif; letter-spacing: 1px;">RYSBEKOV</h4>
+                <p class="text-muted small mb-4">client@luxarchive.com</p>
+                <hr>
+                <div class="text-start mt-3">
+                    <label class="form-label text-muted small text-uppercase" style="letter-spacing: 1px;">Статус аккаунта</label>
+                    <p class="fw-medium">Private Collector</p>
+                    <label class="form-label text-muted small text-uppercase" style="letter-spacing: 1px;">Адрес доставки</label>
+                    <p class="fw-medium text-truncate">?</p>
+                </div>
+                <button class="btn btn-outline-dark btn-sm rounded-0 w-100 mt-3" style="letter-spacing: 1px; font-size: 0.75rem;">Редактировать данные</button>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            
+            <div class="profile-card">
+                <div class="d-flex justify-content-between align-items-center mb-4" style="border-bottom: 1px solid #1a1a1a; padding-bottom: 10px;">
+                    <h3 class="m-0" style="font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 2px; font-size: 1.4rem;">
+                        Текущая корзина / To Buy
+                    </h3>
+                    <button class="clear-btn" onclick="clearCart()">Очистить</button>
+                </div>
+                
+                <div id="cart-list" class="order-list">
+                    </div>
+                
+                <div id="checkout-container" class="text-end mt-4 d-none">
+                    <h5 class="mb-3">Итого: <span id="cart-total">$0</span></h5>
+                    <button class="btn btn-dark rounded-0 px-4 py-2 text-uppercase btn-sm" style="letter-spacing: 1px;" onclick="checkout()">
+                        Оформить покупку
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="mb-4" style="border-bottom: 1px solid #1a1a1a; padding-bottom: 10px;">
+                    <h3 class="m-0" style="font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 2px; font-size: 1.4rem;">
+                        История покупок / Purchased Archive
+                    </h3>
+                </div>
+                
+                <div id="purchased-list" class="order-list">
+                    </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<footer class="footer mt-5 py-4 bg-black text-white">
+    <div class="container text-center">
+        <p>© 2026 LUX ARCHIVE</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const defaultPurchased = [
+        { title: "SWEAR Alternative Metallic/Grey Platform Sneakers", price: "300", img: "https://i.pinimg.com/1200x/59/18/79/5918797fc8ce103b1c668556ce242d7d.jpghttps://i.pinimg.com/1200x/28/37/0b/28370b55f3a4b27821dce97248e1726e.jpg", date: "24.05.2026" },
+        { title: "ROEN Napoleon Military Bomber Jacket", price: "500", img: "https://i.pinimg.com/1200x/04/64/d7/0464d7678a2ff67d3284291b47b79552.jpg", date: "12.04.2026" }
+    ];
+
+    function loadProfileData() {
+        const cartContainer = document.getElementById('cart-list');
+        const purchasedContainer = document.getElementById('purchased-list');
+        const checkoutContainer = document.getElementById('checkout-container');
+        const totalSumElement = document.getElementById('cart-total');
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        if (cart.length === 0) {
+            cartContainer.innerHTML = '<p class="text-muted py-2 m-0">Ваша корзина пуста. Добавьте вещи из каталога.</p>';
+            checkoutContainer.classList.add('d-none');
+        } else {
+            cartContainer.innerHTML = '';
+            checkoutContainer.classList.remove('d-none');
+            
+            let total = 0;
+            cart.forEach((item) => {
+                total += parseFloat(item.price.replace(/[^0-09.]/g, ''));
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'order-item';
+                itemDiv.innerHTML = `
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="${item.img}" class="order-img" alt="${item.title}">
+                        <div>
+                            <h6 class="mb-0" style="font-weight: 500;">${item.title}</h6>
+                            <span class="text-muted small">Ожидает оплаты</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <span class="fw-semibold d-block">$${item.price}</span>
+                        <span class="status-badge waiting">В корзине</span>
+                    </div>
+                `;
+                cartContainer.appendChild(itemDiv);
+            });
+            totalSumElement.innerText = '$' + total;
+        }
+
+        let purchased = JSON.parse(localStorage.getItem('purchased_history'));
+        if (!purchased) {
+            purchased = defaultPurchased;
+            localStorage.setItem('purchased_history', JSON.stringify(purchased));
+        }
+
+        purchasedContainer.innerHTML = '';
+        purchased.forEach((item) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'order-item';
+            itemDiv.innerHTML = `
+                <div class="d-flex align-items-center gap-3">
+                    <img src="${item.img}" class="order-img" alt="${item.title}">
+                    <div>
+                        <h6 class="mb-0" style="font-weight: 500;">${item.title}</h6>
+                        <span class="text-muted small">${item.date || 'Доставлено'}</span>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <span class="fw-semibold d-block">$${item.price}</span>
+                    <span class="status-badge">Куплено</span>
+                </div>
+            `;
+            purchasedContainer.appendChild(itemDiv);
+        });
+    }
+
+    function checkout() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) return;
+
+        let purchased = JSON.parse(localStorage.getItem('purchased_history')) || [];
+        
+        const today = new Date().toLocaleDateString('ru-RU');
+
+        cart.forEach(item => {
+            purchased.unshift({
+                title: item.title,
+                price: item.price,
+                img: item.img,
+                date: today
+            });
+        });
+
+        localStorage.setItem('purchased_history', JSON.stringify(purchased));
+        localStorage.removeItem('cart');
+
+        alert('Покупка успешно оформлена! Вещи добавлены в ваш личный архив.');
+        loadProfileData();
+    }
+
+    function clearCart() {
+        if (confirm('Очистить текущую корзину?')) {
+            localStorage.removeItem('cart');
+            loadProfileData();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProfileData);
+</script>
+</body>
+</html>

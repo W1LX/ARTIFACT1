@@ -7,63 +7,144 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .card-img-top {
-            height: 400px; /* Немного увеличил высоту для люкс-вида */
-            object-fit: cover;
-            background-color: #f8f8f8;
-        }
-        .section-title {
-            margin-top: 60px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 2px;
-        }
-        .price {
-            font-weight: bold;
-            color: #000;
-        }
-        .product {
-            border: none;
-            transition: 0.3s;
-        }
-        .product:hover {
-            transform: translateY(-5px);
-        }
-    </style>
 </head>
 <body>
 
+    <script>
+    // Список твоих треков (можешь добавлять сколько угодно)
+    const playlist = [
+        { title: "Osamason - Whiteasf", src: "music/track1.mp3" },
+        { title: "Nettspend - What They Say", src: "music/track2.mp3" },
+        { title: "Chief Keef - Love Sosa", src: "music/track3.mp3" }
+    ];
+
+    let currentTrackIndex = 0;
+    const audio = document.getElementById('main-audio');
+    const playBtn = document.getElementById('player-play');
+    const prevBtn = document.getElementById('player-prev');
+    const nextBtn = document.getElementById('player-next');
+    const trackTitle = document.getElementById('player-track-title');
+    const progressBar = document.getElementById('player-progress');
+    const currentTimeEl = document.getElementById('player-current-time');
+    const durationEl = document.getElementById('player-duration');
+
+    // Загрузка трека
+    function loadTrack(index) {
+        const track = playlist[index];
+        audio.src = track.src;
+        trackTitle.textContent = track.title;
+    }
+
+    // Воспроизведение / Пауза
+    function togglePlay() {
+        if (audio.paused) {
+            audio.play().catch(e => console.log("Автовоспроизведение заблокировано браузером, нужен клик"));
+            playBtn.textContent = '⏸';
+        } else {
+            audio.pause();
+            playBtn.textContent = '▶';
+        }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+
+    // Переключение треков
+    prevBtn.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrackIndex);
+        audio.play();
+        playBtn.textContent = '⏸';
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex);
+        audio.play();
+        playBtn.textContent = '⏸';
+    });
+
+    // Автоматический переход на следующий трек по окончании
+    audio.addEventListener('ended', () => {
+        nextBtn.click();
+    });
+
+    // Обновление прогресс-бара и времени
+    audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progress;
+            
+            // Форматирование времени (минуты:секунды)
+            let curMins = Math.floor(audio.currentTime / 60);
+            let curSecs = Math.floor(audio.currentTime % 60);
+            let durMins = Math.floor(audio.duration / 60);
+            let durSecs = Math.floor(audio.duration % 60);
+            
+            if (curSecs < 10) curSecs = "0" + curSecs;
+            if (durSecs < 10) durSecs = "0" + durSecs;
+            
+            currentTimeEl.textContent = `${curMins}:${curSecs}`;
+            durationEl.textContent = `${durMins}:${durSecs}`;
+        }
+    });
+
+    // Перемотка трека ползунком
+    progressBar.addEventListener('input', () => {
+        const seekTime = (progressBar.value / 100) * audio.duration;
+        audio.currentTime = seekTime;
+    });
+
+    // Инициализация первого трека при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+        loadTrack(currentTrackIndex);
+    });
+</script>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
     <div class="container">
-        <a class="navbar-brand logo" href="index.html">LUX ARCHIVE</a>
+        <a class="navbar-brand logo d-flex align-items-center gap-2" href="index.html">
+            <img src="images/logo.jpg" alt="LUX ARCHIVE" style="height: 40px;">
+            <span style="letter-spacing:2px; font-family: 'Playfair Display', serif;">
+                ARTIFACT
+            </span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Главная</a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Категории</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Категории
+                    </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#jackets">Куртки</a></li>
                         <li><a class="dropdown-item" href="#t-shirts">Футболки</a></li>
                         <li><a class="dropdown-item" href="#pants">Штаны</a></li>
                         <li><a class="dropdown-item" href="#shoes">Обувь</a></li>
+                        <li><a class="dropdown-item" href="#accessories">Аксессуары</a></li>
+                        <li><a class="dropdown-item" href="#bags">Сумки</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">Профиль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">О нас</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 <main class="container mb-5">
-    <h1 class="text-center mt-5 display-4" style="font-family: 'Playfair Display';">ARCHIVE COLLECTIONS</h1>
-
+    <h1 class="text-center mt-5 display-4" style="font-family: 'Playfair Display';">
+        ARCHIVE COLLECTIONS
+    </h1>
+    
     <h2 id="jackets" class="section-title">Куртки / Outerwear</h2>
     <div class="row g-4">
         <div class="col-md-3">
@@ -73,6 +154,7 @@
                     <h5>Prada Sport Nylon Jacket</h5>
                     <p>1998 - 2001 SGV</p>
                     <p class="price">$1500</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Prada Sport Nylon Jacket', '1500', 'images/prada.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -83,6 +165,7 @@
                     <h5>Gucci Napoleon Jacket</h5>
                     <p>2015 Ready-to-wear</p>
                     <p class="price">$3300</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Gucci Napoleon Jacket', '3300', 'images/gucci.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -93,6 +176,7 @@
                     <h5>BAPE Shark Riders Jacket</h5>
                     <p>2010 Archive</p>
                     <p class="price">$1400</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('BAPE Shark Riders Jacket', '1400', 'https://i.pinimg.com/736x/9c/57/58/9c57583aa139dc3ee01988baba99b7c5.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -103,6 +187,7 @@
                     <h5>Rick Owens Stooges</h5>
                     <p>2010 Leather</p>
                     <p class="price">$700</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Rick Owens Stooges', '700', 'https://i.pinimg.com/736x/db/b1/85/dbb185af275022f387a1b9350ec30330.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -110,130 +195,219 @@
 
     <h2 id="t-shirts" class="section-title">Футболки / T-shirts</h2>
     <div class="row g-4">
-   <div class="row g-4">
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/f0/61/cc/f061ccbd733ec4fa5d5670cab8598292.jpg" class="card-img-top" alt="Prada Jacket">
+                <img src="https://i.pinimg.com/1200x/f0/61/cc/f061ccbd733ec4fa5d5670cab8598292.jpg" class="card-img-top">
                 <div class="card-body text-center">
                     <h5>Enfants Riches Déprimés Distressed Logo Tee</h5>
-                    <p>2012</p>
-                    <p class="price">$450</p>
+                    <p>2012</p>                    <p class="price">$450</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Enfants Riches Déprimés Distressed Logo Tee', '450', 'https://i.pinimg.com/1200x/f0/61/cc/f061ccbd733ec4fa5d5670cab8598292.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/38/d1/9c/38d19c69e383552c35fd5dc038fd39c8.jpg" class="card-img-top" alt="Gucci Jacket">
+                <img src="https://i.pinimg.com/1200x/38/d1/9c/38d19c69e383552c35fd5dc038fd39c8.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Number (N)ine "Grunge" Distressed Border Long Sleeve</h5>
-                    <p>2002–2005</p>
-                    <p class="price">$400</p>
+                    <h5>Number (N)ine Border Long Sleeve</h5>
+                    <p>2002–2005</p>                    <p class="price">$400</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Number (N)ine Border Long Sleeve', '400', 'https://i.pinimg.com/1200x/38/d1/9c/38d19c69e383552c35fd5dc038fd39c8.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/96/5b/e5/965be50ecd0697ea630d41827de81e4f.jpg" class="card-img-top" alt="BAPE">
+                <img src="https://i.pinimg.com/1200x/96/5b/e5/965be50ecd0697ea630d41827de81e4f.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Chrome Hearts "USA Flag" London 2012 Tee</h5>
-                    <p>2012</p>
-                    <p class="price">$400</p>
+                    <h5>Chrome Hearts London Tee</h5>
+                    <p>2012</p>                    <p class="price">$400</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Chrome Hearts London Tee', '400', 'https://i.pinimg.com/1200x/96/5b/e5/965be50ecd0697ea630d41827de81e4f.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/81/60/90/816090058d7dee9c97e13593eb256fde.jpg" class="card-img-top" alt="Rick Owens">
+                <img src="https://i.pinimg.com/1200x/81/60/90/816090058d7dee9c97e13593eb256fde.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Hood By Air x Aphex Twin "Windowlicker" Longsleeve</h5>
-                    <p>2014 (Коллекция "Superego")</p>
-                    <p class="price">$350</p>
+                    <h5>Hood By Air x Aphex Twin</h5>
+                    <p>2014</p>                    <p class="price">$350</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Hood By Air x Aphex Twin', '350', 'https://i.pinimg.com/1200x/81/60/90/816090058d7dee9c97e13593eb256fde.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
     </div>
+
     <h2 id="pants" class="section-title">Штаны / Pants</h2>
     <div class="row g-4">
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/00/80/00/0080003d19f122dc26795f77f2dc1a16.jpg" class="card-img-top" alt="Prada Jacket">
+                <img src="https://i.pinimg.com/736x/00/80/00/0080003d19f122dc26795f77f2dc1a16.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Issey Miyake Men Multi-Pocket Layered Denim (Naoki Takizawa)</h5>
-                    <p>AW2002 "Tether"</p>
-                    <p class="price">$1700</p>
+                    <h5>Issey Miyake Layered Denim</h5>
+                    <p>AW2002</p>                    <p class="price">$1700</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Issey Miyake Layered Denim', '1700', 'https://i.pinimg.com/736x/00/80/00/0080003d19f122dc26795f77f2dc1a16.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/95/88/50/958850b387ab9c55dec4bbb9246baf46.jpg" class="card-img-top" alt="Gucci Jacket">
+                <img src="https://i.pinimg.com/1200x/95/88/50/958850b387ab9c55dec4bbb9246baf46.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Rick Owens High-Neck Leather Biker (Naska/Stooges)</h5>
-                    <p>2009-2012</p>
-                    <p class="price">$700</p>
+                    <h5>Rick Owens Leather Biker</h5>
+                    <p>2009-2012</p>                    <p class="price">$700</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Rick Owens Leather Biker', '700', 'https://i.pinimg.com/1200x/95/88/50/958850b387ab9c55dec4bbb9246baf46.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/1d/20/97/1d20974f5d9023bf2d95f5a6f526403d.jpg" class="card-img-top" alt="BAPE">
+                <img src="https://i.pinimg.com/736x/1d/20/97/1d20974f5d9023bf2d95f5a6f526403d.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Shine Luxury Studios "Knotterstar" Waxed Flare Jeans</h5>
-                    <p>2024</p>
-                    <p class="price">$340</p>
+                    <h5>Shine Luxury Waxed Flare Jeans</h5>
+                    <p>2024</p>                    <p class="price">$340</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Shine Luxury Waxed Flare Jeans', '340', 'https://i.pinimg.com/736x/1d/20/97/1d20974f5d9023bf2d95f5a6f526403d.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/46/49/55/4649559dfd4a73b23623a90fd09c1773.jpg" class="card-img-top" alt="Rick Owens">
+                <img src="https://i.pinimg.com/736x/46/49/55/4649559dfd4a73b23623a90fd09c1773.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Rick Owens Bolan Banana Bootcut Pants (Waxed Denim)</h5>
-                    <p>2022</p>
-                    <p class="price">$890</p>
+                    <h5>Rick Owens Bolan Banana Pants</h5>
+                    <p>2022</p>                    <p class="price">$890</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Rick Owens Bolan Banana Pants', '890', 'https://i.pinimg.com/736x/46/49/55/4649559dfd4a73b23623a90fd09c1773.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
     </div>
+
     <h2 id="shoes" class="section-title">Обувь / Footwear</h2>
     <div class="row g-4">
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/c0/e7/f6/c0e7f63d3c95d2c653915081ac9ac4c7.jpg" class="card-img-top" alt="Prada Jacket">
+                <img src="https://i.pinimg.com/736x/c0/e7/f6/c0e7f63d3c95d2c653915081ac9ac4c7.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>The Old Curiosity Shop x John Moore "Spiked" Hogg Boots</h5>
-                    <p>2000-2010</p>
-                    <p class="price">$990</p>
+                    <h5>John Moore Spiked Boots</h5>
+                    <p>2000-2010</p>                    <p class="price">$990</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('John Moore Spiked Boots', '990', 'https://i.pinimg.com/736x/c0/e7/f6/c0e7f63d3c95d2c653915081ac9ac4c7.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/1200x/1a/79/b7/1a79b71a89f8490b74333606d7dd382c.jpg" class="card-img-top" alt="Gucci Jacket">
+                <img src="https://i.pinimg.com/1200x/1a/79/b7/1a79b71a89f8490b74333606d7dd382c.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Swear London "Alternative Smiley" Platform Boots</h5>
-                    <p>1990-2000</p>
-                    <p class="price">$500</p>
+                    <h5>Swear London Platform Boots</h5>
+                    <p>1990-2000</p>                    <p class="price">$500</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Swear London Platform Boots', '500', 'https://i.pinimg.com/1200x/1a/79/b7/1a79b71a89f8490b74333606d7dd382c.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/ad/5e/75/ad5e751e237f5d9b921154329aaa6907.jpg" class="card-img-top" alt="BAPE">
+                <img src="https://i.pinimg.com/736x/ad/5e/75/ad5e751e237f5d9b921154329aaa6907.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Carol Christian Poell "Drip" Derby (AM/2601L ROOMS-PTC/10)</h5>
-                    <p>2010</p>
-                    <p class="price">$1990</p>
+                    <h5>Carol Christian Poell Derby</h5>
+                    <p>2010</p>                    <p class="price">$1990</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Carol Christian Poell Derby', '1990', 'https://i.pinimg.com/736x/ad/5e/75/ad5e751e237f5d9b921154329aaa6907.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card product">
-                <img src="https://i.pinimg.com/736x/54/ed/04/54ed04fe02024fd07446c291308605f8.jpg" class="card-img-top" alt="Rick Owens">
+                <img src="https://i.pinimg.com/736x/54/ed/04/54ed04fe02024fd07446c291308605f8.jpg" class="card-img-top">
                 <div class="card-body text-center">
-                    <h5>Rick Owens "Wrapped" Ramone Sneakers</h5>
-                    <p>2017</p>
-                    <p class="price">$730</p>
+                    <h5>Rick Owens Ramones</h5>
+                    <p>2017</p>                    <p class="price">$730</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('Rick Owens Ramones', '730', 'https://i.pinimg.com/736x/54/ed/04/54ed04fe02024fd07446c291308605f8.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="accessories" class="section-title">Кольца / Rings</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/b0/02/79/b002799e95327bbd0bd932508bf3a977.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>MAISON MARGIELA Tabi Ring Silver</h5>
+                    <p>1988</p>                    <p class="price">$280</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('MAISON MARGIELA Tabi Ring Silver', '280', 'https://i.pinimg.com/736x/b0/02/79/b002799e95327bbd0bd932508bf3a977.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/e3/1e/25/e31e25a402ec7992f941891a5de539dc.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>CHROME HEARTS Floral Cross ID Fancy Link Bracelet</h5>
+                    <p>1990</p>                    <p class="price">$2800</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('CHROME HEARTS Floral Cross ID Fancy Link Bracelet', '2800', 'https://i.pinimg.com/1200x/e3/1e/25/e31e25a402ec7992f941891a5de539dc.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/27/6d/a6/276da67476bddfa0fe476285ef3add2b.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>DIOR Oblique Ring Silver</h5>
+                    <p>2019-2020</p>                    <p class="price">$320</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('DIOR Oblique Ring Silver', '320', 'https://i.pinimg.com/1200x/27/6d/a6/276da67476bddfa0fe476285ef3add2b.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/736x/db/b7/98/dbb7981efdba0ff40d87ef1e31eeac46.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>CAROL CHRISTIAN POELL Coiled Nail Ring</h5>
+                    <p>2000</p>                    <p class="price">$450</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('CAROL CHRISTIAN POELL Coiled Nail Ring', '450', 'https://i.pinimg.com/736x/db/b7/98/dbb7981efdba0ff40d87ef1e31eeac46.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="bags" class="section-title">Сумки / Bags</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/34/63/ed/3463ed8c112119ae97a3952fa775ea76.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>CRAIG MORRISON Super Spike Messenger Bag</h5>
+                    <p>1990</p>                    <p class="price">$350</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('CRAIG MORRISON Super Spike Messenger Bag', '350', 'https://i.pinimg.com/1200x/34/63/ed/3463ed8c112119ae97a3952fa775ea76.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/c4/40/7a/c4407a1cd8ae9356391f68e30a0b896a.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>CHANEL Graffiti Art School Backpack</h5>
+                    <p>2014</p>                    <p class="price">$8500</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('CHANEL Graffiti Art School Backpack', '8500', 'https://i.pinimg.com/1200x/c4/40/7a/c4407a1cd8ae9356391f68e30a0b896a.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/60/c7/e1/60c7e1df0e66d38b6d808be855c18cc2.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>CAROL CHRISTIAN POELL Shoulder Bag</h5>
+                    <p>2000</p>                    <p class="price">$2200</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('CAROL CHRISTIAN POELL Shoulder Bag', '2200', 'https://i.pinimg.com/1200x/60/c7/e1/60c7e1df0e66d38b6d808be855c18cc2.jpg')">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card product">
+                <img src="https://i.pinimg.com/1200x/3c/5c/4e/3c5c4ed207430b89c46d886875cf1f5f.jpg" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5>UNDERCOVER Scab Backpack</h5>
+                    <p>2003</p>                    <p class="price">$1400</p>
+                    <button class="btn btn-dark btn-sm rounded-0 w-100 mt-2" onclick="addToCart('UNDERCOVER Scab Backpack', '1400', 'https://i.pinimg.com/1200x/3c/5c/4e/3c5c4ed207430b89c46d886875cf1f5f.jpg')">Добавить в корзину</button>
                 </div>
             </div>
         </div>
@@ -246,6 +420,35 @@
     </div>
 </footer>
 
+<div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function addToCart(title, price, img) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ title: title, price: price, img: img });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        
+        toast.className = 'custom-toast';
+        toast.innerHTML = `
+            <img src="${img}" alt="${title}">
+            <div>
+                <div class="toast-title">Добавлено в корзину</div>
+                <div class="toast-body">${title}</div>
+            </div>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('hide');
+            setTimeout(() => toast.remove(), 400);
+        }, 3000);
+    }
+</script>
 </body>
 </html>
