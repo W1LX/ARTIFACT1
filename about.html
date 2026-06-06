@@ -191,7 +191,7 @@
         }
     });
 
-    // Перемотка трека ползунком
+  
     progressBar.addEventListener('input', () => {
         const seekTime = (progressBar.value / 100) * audio.duration;
         audio.currentTime = seekTime;
